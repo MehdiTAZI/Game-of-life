@@ -29,11 +29,12 @@ public class OvercrowdingRule implements CellRule {
             if (cell.isAlive() && grid.getLiveNeighboursAt(cellPosition) >   MAXIMUM_ALIVE) {
                 return  Cell.createAliveCell();
             }
-            return cell;
+
         } catch (OutOfGridException e) {
             //log simulation failed
-            return null;
         }
+
+        return null;
 
     }
 }

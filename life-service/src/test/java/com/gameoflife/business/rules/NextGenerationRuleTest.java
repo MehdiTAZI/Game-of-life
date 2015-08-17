@@ -55,7 +55,7 @@ public class NextGenerationRuleTest {
         Mockito.when(grid.getLiveNeighboursAt(position)).thenReturn(2);
         Mockito.when(grid.getCellAt(position)).thenReturn(cell);
 
-        assertThat(nextGenerationRule.simulate(position, grid)).isNotEqualTo(null).isEqualTo(cell);
+        assertThat(nextGenerationRule.simulate(position, grid)).isEqualTo(null);
     }
 
 }

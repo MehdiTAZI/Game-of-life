@@ -90,7 +90,9 @@ public class Grid {
             return false;
         if (height != grid.height)
             return false;
-        return Arrays.deepEquals(cells, grid.cells);
+
+        //return Arrays.deepEquals(cells, grid.cells); //todo : check
+        return this.toString().equals(o.toString());
 
     }
 

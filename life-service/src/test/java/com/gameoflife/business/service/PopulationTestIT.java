@@ -20,16 +20,16 @@ public class PopulationTestIT {
     private final CellState dead = CellState.DEAD;
     private final CellState alive = CellState.ALIVE;
     private final int MAX_ROW = 3;
-    private final int MAX_COL = 2;
+    private final int MAX_COL = 3;
 
     @Test
     public void simulateAllPattern1Test() throws OutOfGridException {
         final int nbSteps = 3;
 
-        SimpleGridInput simpleGridInput = new SimpleGridInput(MAX_ROW, MAX_COL, new CellState[][] { { dead, alive }, { alive, dead }, { alive, dead } });
+        SimpleGridInput simpleGridInput = new SimpleGridInput(MAX_ROW, MAX_COL, new CellState[][] { { dead, dead,dead }, { alive, alive,alive }, { dead, dead,dead } });
         Grid seed = new Grid(simpleGridInput) ;
-        Grid firstGeneration = new Grid(new SimpleGridInput(MAX_ROW,MAX_COL,new CellState[][]{{dead,dead},{alive,alive},{dead,dead}}));
-        Grid secondGeneration =new Grid(new SimpleGridInput(MAX_ROW,MAX_COL,new CellState[][]{{dead,dead},{dead,dead},{dead,dead}}));
+        Grid firstGeneration = new Grid(new SimpleGridInput(MAX_ROW,MAX_COL,new CellState[][]{{dead,alive,dead},{dead,alive,dead},{dead,alive,dead}}));
+        Grid secondGeneration =seed;
 
         final Grid[] gridSteps = new Grid[] {seed ,firstGeneration, secondGeneration};
 
@@ -47,10 +47,10 @@ public class PopulationTestIT {
     public void simulateAllPattern2Test() throws OutOfGridException {
         final int nbSteps = 3;
 
-        SimpleGridInput simpleGridInput = new SimpleGridInput(MAX_ROW, MAX_COL, new CellState[][] { { dead, alive }, { alive, dead }, { alive, dead } });
+        SimpleGridInput simpleGridInput = new SimpleGridInput(MAX_ROW, MAX_COL, new CellState[][] { { dead, alive,dead }, { alive, dead,dead }, { alive, dead,dead } });
         Grid seed = new Grid(simpleGridInput) ;
-        Grid firstGeneration = new Grid(new SimpleGridInput(MAX_ROW,MAX_COL,new CellState[][]{{dead,dead},{alive,alive},{dead,dead}}));
-        Grid secondGeneration =new Grid(new SimpleGridInput(MAX_ROW,MAX_COL,new CellState[][]{{dead,dead},{dead,dead},{dead,dead}}));
+        Grid firstGeneration = new Grid(new SimpleGridInput(MAX_ROW,MAX_COL,new CellState[][]{{dead,dead,dead},{alive,alive,dead},{dead,dead,dead}}));
+        Grid secondGeneration =new Grid(new SimpleGridInput(MAX_ROW,MAX_COL,new CellState[][]{{dead,dead,dead},{dead,dead,dead},{dead,dead,dead}}));
 
         final Grid[] gridSteps = new Grid[] {seed ,firstGeneration, secondGeneration};
 

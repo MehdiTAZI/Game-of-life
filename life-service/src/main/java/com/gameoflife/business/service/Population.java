@@ -53,7 +53,9 @@ public class Population {
             for (int y = 0; y < maxColumn; y++) {
                 for(CellRule rule : rules){
                     Cell newCell = rule.simulate(new Vector2D(x, y), currentGrid);
-                    result.setCellAt(x,y,newCell);
+                    if(newCell!=null) {
+                        result.setCellAt(x, y, newCell);
+                    }
                 }
             }
         }

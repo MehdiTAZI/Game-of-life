@@ -32,11 +32,11 @@ public class NextGenerationRule implements CellRule {
             if(cell.isAlive() && WITHIN_VALUES.contains(grid.getLiveNeighboursAt(cellPosition))){
                 return  Cell.createAliveCell();
             }
-            return cell;
+
         } catch (OutOfGridException e) {
             //log simulation failed
-            return null;
         }
 
+        return null;
     }
 }

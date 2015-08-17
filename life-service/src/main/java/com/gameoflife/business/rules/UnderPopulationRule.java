@@ -30,12 +30,11 @@ public class UnderPopulationRule implements CellRule {
             if(cell.isAlive() && grid.getLiveNeighboursAt(cellPosition)<MINIMUM_ALIVE){
                 return Cell.createDeadCell();
             }
-            return cell;
 
         } catch (OutOfGridException e) {
-           //log simulation failed
-            return null;
+
         }
+        return null;
 
     }
 }

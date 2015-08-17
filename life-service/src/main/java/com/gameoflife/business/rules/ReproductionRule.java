@@ -30,11 +30,10 @@ public class ReproductionRule implements CellRule {
             if (cell.isDead() && grid.getLiveNeighboursAt(cellPosition) ==  EXACTLY_ALIVE) {
                 return  Cell.createAliveCell();
             }
-            return cell;
+
         } catch (OutOfGridException e) {
             //log simulation failed
-            return null;
         }
-
+        return null;
     }
 }

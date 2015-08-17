@@ -55,7 +55,7 @@ public class UnderPopulationRuleTest {
         Mockito.when(grid.getLiveNeighboursAt(position)).thenReturn(1);
         Mockito.when(grid.getCellAt(position)).thenReturn(cell);
 
-        assertThat(underPopulationRule.simulate(position, grid)).isNotEqualTo(null).isEqualTo(cell);
+        assertThat(underPopulationRule.simulate(position, grid)).isEqualTo(null);
     }
 
 }
