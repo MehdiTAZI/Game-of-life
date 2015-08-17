@@ -32,14 +32,24 @@ public class Grid {
     }
 
     public Cell getCellAt(final int x, final int y) throws OutOfGridException {
-
         return getCellAt(new Vector2D(x,y));
     }
+
     public Cell getCellAt(final Vector2D cellPosition) throws OutOfGridException {
         if(isCellOutsideBorders(cellPosition)){
             throw new OutOfGridException();
         }
         return cells[cellPosition.getX()][cellPosition.getY()];
+    }
+
+    public void setCellAt(final int x, final int y,Cell cell) throws OutOfGridException {
+        setCellAt(new Vector2D(x, y),cell);
+    }
+    public void setCellAt(final Vector2D cellPosition,Cell cell) throws OutOfGridException {
+        if(isCellOutsideBorders(cellPosition)){
+            throw new OutOfGridException();
+        }
+        cells[cellPosition.getX()][cellPosition.getY()]=cell;
     }
 
     public boolean isCellOutsideBorders(final Vector2D cellPosition) {

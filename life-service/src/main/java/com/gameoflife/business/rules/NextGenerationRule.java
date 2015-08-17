@@ -26,17 +26,17 @@ public class NextGenerationRule implements CellRule {
     }
 
     private static final List<Integer> WITHIN_VALUES = Lists.newArrayList(2,3);
-    public boolean simulate(Vector2D cellPosition, Grid grid) {
+    public Cell simulate(Vector2D cellPosition, Grid grid) {
         try {
             Cell cell = grid.getCellAt(cellPosition);
             if(cell.isAlive() && WITHIN_VALUES.contains(grid.getLiveNeighboursAt(cellPosition))){
-                cell.setCellState(CellState.ALIVE);// todo : to remove ? default behavior ?
-                return true;
+                return  Cell.createAliveCell();
             }
-
+            return cell;
         } catch (OutOfGridException e) {
             //log simulation failed
+            return null;
         }
-        return false;
+
     }
 }

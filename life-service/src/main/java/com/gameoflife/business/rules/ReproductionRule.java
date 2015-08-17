@@ -11,6 +11,8 @@ import com.gameoflife.maths.Vector2D;
  */
 public class ReproductionRule implements CellRule {
 
+    private static final int EXACTLY_ALIVE = 3;
+
     private static ReproductionRule instance =  null;
     synchronized  public static ReproductionRule getInstance(){
         if(instance==null){
@@ -22,18 +24,17 @@ public class ReproductionRule implements CellRule {
 
     }
 
-    private static final int EXACTLY_ALIVE = 3;
-    public boolean simulate(Vector2D cellPosition, Grid grid) {
+    public Cell simulate(Vector2D cellPosition, Grid grid) {
         try {
             Cell cell = grid.getCellAt(cellPosition);
             if (cell.isDead() && grid.getLiveNeighboursAt(cellPosition) ==  EXACTLY_ALIVE) {
-                cell.setCellState(CellState.ALIVE);
-                return true;
+                return  Cell.createAliveCell();
             }
-
+            return cell;
         } catch (OutOfGridException e) {
             //log simulation failed
+            return null;
         }
-        return false;
+
     }
 }

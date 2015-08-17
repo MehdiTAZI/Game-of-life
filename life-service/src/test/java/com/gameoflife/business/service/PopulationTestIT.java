@@ -2,6 +2,7 @@ package com.gameoflife.business.service;
 
 import com.gameoflife.business.actions.NewGenerationAction;
 import com.gameoflife.core.consts.CellState;
+import com.gameoflife.core.exceptions.OutOfGridException;
 import com.gameoflife.core.inputs.SimpleGridInput;
 import com.gameoflife.core.models.Grid;
 import org.junit.Test;
@@ -22,7 +23,7 @@ public class PopulationTestIT {
     private final int MAX_COL = 2;
 
     @Test
-    public void simulateAllPattern1Test(){
+    public void simulateAllPattern1Test() throws OutOfGridException {
         final int nbSteps = 3;
 
         SimpleGridInput simpleGridInput = new SimpleGridInput(MAX_ROW, MAX_COL, new CellState[][] { { dead, alive }, { alive, dead }, { alive, dead } });

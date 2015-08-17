@@ -1,5 +1,6 @@
 package com.gameoflife.business.rules;
 
+import com.gameoflife.core.consts.CellState;
 import com.gameoflife.core.exceptions.OutOfGridException;
 import com.gameoflife.core.models.Cell;
 import com.gameoflife.core.models.Grid;
@@ -20,7 +21,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class UnderPopulationRuleTest {
 
-    private static final Vector2D position = new Vector2D(2,2);
+    private  final Vector2D position = new Vector2D(2,2);
 
     @Mock
     private Grid grid;
@@ -28,7 +29,8 @@ public class UnderPopulationRuleTest {
     @Mock
     private Cell cell;
 
-    @InjectMocks UnderPopulationRule underPopulationRule;
+    @InjectMocks
+    UnderPopulationRule underPopulationRule;
 
     @Test
     public void underPopulationRuleSatisfied() throws OutOfGridException {
@@ -38,8 +40,11 @@ public class UnderPopulationRuleTest {
         Mockito.when(grid.getLiveNeighboursAt(position)).thenReturn(1);
         Mockito.when(grid.getCellAt(position)).thenReturn(cell);
 
+        Cell newCell = underPopulationRule.simulate(position, grid);
 
-       assertThat(underPopulationRule.simulate(position, grid)).isEqualTo(true);
+        assertThat(newCell).isNotEqualTo(null);
+        assertThat(newCell.getCellState()).isEqualTo(CellState.DEAD);
+
 
     }
     @Test
@@ -50,7 +55,7 @@ public class UnderPopulationRuleTest {
         Mockito.when(grid.getLiveNeighboursAt(position)).thenReturn(1);
         Mockito.when(grid.getCellAt(position)).thenReturn(cell);
 
-        assertThat(underPopulationRule.simulate(position, grid)).isEqualTo(false);
+        assertThat(underPopulationRule.simulate(position, grid)).isNotEqualTo(null).isEqualTo(cell);
     }
 
 }

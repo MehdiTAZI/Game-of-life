@@ -11,6 +11,8 @@ import com.gameoflife.maths.Vector2D;
  */
 public class UnderPopulationRule implements CellRule {
 
+    private static final int MINIMUM_ALIVE = 2;
+
     private static UnderPopulationRule instance =  null;
     synchronized  public static UnderPopulationRule getInstance(){
         if(instance==null){
@@ -22,18 +24,18 @@ public class UnderPopulationRule implements CellRule {
 
     }
 
-    private static final int MINIMUM_ALIVE = 2;
-    public boolean simulate(Vector2D cellPosition, Grid grid) {
+    public Cell simulate(Vector2D cellPosition, Grid grid) {
         try {
             Cell cell = grid.getCellAt(cellPosition);
             if(cell.isAlive() && grid.getLiveNeighboursAt(cellPosition)<MINIMUM_ALIVE){
-                cell.setCellState(CellState.DEAD);
-                return true;
+                return Cell.createDeadCell();
             }
+            return cell;
 
         } catch (OutOfGridException e) {
            //log simulation failed
+            return null;
         }
-        return false;
+
     }
 }

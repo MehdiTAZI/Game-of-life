@@ -6,7 +6,10 @@ import com.gameoflife.business.rules.OvercrowdingRule;
 import com.gameoflife.business.rules.ReproductionRule;
 import com.gameoflife.business.rules.UnderPopulationRule;
 import com.gameoflife.business.actions.NewGenerationAction;
+import com.gameoflife.core.exceptions.OutOfGridException;
+import com.gameoflife.core.inputs.DeadGridInput;
 import com.gameoflife.core.inputs.GridInput;
+import com.gameoflife.core.models.Cell;
 import com.gameoflife.core.models.Grid;
 import com.gameoflife.maths.Vector2D;
 
@@ -18,7 +21,7 @@ import java.util.List;
  */
 public class Population {
 
-    //private List<Grid> gridTimeLine;
+    private List<Grid> gridTimeLine;
     private Grid currentGrid;
     private final GridInput gridInput;
 
@@ -34,40 +37,45 @@ public class Population {
     }
 
     public void initialize(){
-        this.currentGrid =  new Grid(this.gridInput);
-        /*this.gridTimeLine = new LinkedList<Grid>();
-        this.gridTimeLine.add(currentGrid);*/
+        this.gridTimeLine = new LinkedList<Grid>();
+        this.gridTimeLine.add(new Grid(this.gridInput));
+        this.currentGrid =  this.gridTimeLine.get(0) ;
     }
 
-    public Grid simulateNextGeneration() {
+    public Grid simulateNextGeneration() throws OutOfGridException {
 
         final int maxRow = gridInput.getWidth();
         final int maxColumn = gridInput.getHeight();
 
+        Grid result = new Grid(new DeadGridInput(maxRow,maxColumn));
+
         for (int x = 0; x < maxRow; x++) {
             for (int y = 0; y < maxColumn; y++) {
                 for(CellRule rule : rules){
-                    rule.simulate(new Vector2D(x,y),currentGrid);
+                    Cell newCell = rule.simulate(new Vector2D(x, y), currentGrid);
+                    result.setCellAt(x,y,newCell);
                 }
             }
         }
-        return currentGrid;
+        this.currentGrid = result;
+        this.gridTimeLine.add(result);
+        return result;
     }
 
 
     // todo : to fix
     public void simulateAll(NewGenerationAction newGenerationAction){
-        Grid grid =  new Grid(this.gridInput);
-        final int maxRow = grid.getWidth();
-        final int maxColumn = grid.getHeight();
+
+        final int maxRow =0;
+        final int maxColumn = 0;
 
         for (int x = 0; x < maxRow; x++) {
             for (int y = 0; y < maxColumn; y++) {
                 for(CellRule rule : rules){
-                    rule.simulate(new Vector2D(x,y),grid);
+                    rule.simulate(new Vector2D(x,y),null);
                 }
                 if(newGenerationAction !=null){
-                    newGenerationAction.onNewGenerationCreated(grid);
+                    newGenerationAction.onNewGenerationCreated(null);
                 }
 
             }

@@ -1,5 +1,6 @@
 package com.gameoflife.business.rules;
 
+import com.gameoflife.core.consts.CellState;
 import com.gameoflife.core.exceptions.OutOfGridException;
 import com.gameoflife.core.models.Cell;
 import com.gameoflife.core.models.Grid;
@@ -28,7 +29,8 @@ public class NextGenerationRuleTest {
     @Mock
     private Cell cell;
 
-    @InjectMocks NextGenerationRule nextGenerationRule;
+    @InjectMocks
+    NextGenerationRule nextGenerationRule;
 
     @Test
     public void newGenerationRuleSatisfied() throws OutOfGridException {
@@ -38,7 +40,11 @@ public class NextGenerationRuleTest {
         Mockito.when(grid.getLiveNeighboursAt(position)).thenReturn(2);
         Mockito.when(grid.getCellAt(position)).thenReturn(cell);
 
-        assertThat(nextGenerationRule.simulate(position, grid)).isEqualTo(true);
+        Cell newCell = nextGenerationRule.simulate(position, grid);
+
+        assertThat(newCell).isNotEqualTo(null);
+        assertThat(newCell.getCellState()).isEqualTo(CellState.ALIVE);
+
 
     }
     @Test
@@ -49,7 +55,7 @@ public class NextGenerationRuleTest {
         Mockito.when(grid.getLiveNeighboursAt(position)).thenReturn(2);
         Mockito.when(grid.getCellAt(position)).thenReturn(cell);
 
-        assertThat(nextGenerationRule.simulate(position, grid)).isEqualTo(false);
+        assertThat(nextGenerationRule.simulate(position, grid)).isNotEqualTo(null).isEqualTo(cell);
     }
 
 }
