@@ -22,29 +22,31 @@ public class PopulationTestIT {
     private final int MAX_ROW = 3;
     private final int MAX_COL = 3;
 
+
     @Test
-    public void simulateAllPattern1Test() throws OutOfGridException {
-        final int nbSteps = 3;
+    public void simulateRepeatedPatternTest() throws OutOfGridException {
+
+        final int nbSteps = 20;
 
         SimpleGridInput simpleGridInput = new SimpleGridInput(MAX_ROW, MAX_COL, new CellState[][] { { dead, dead,dead }, { alive, alive,alive }, { dead, dead,dead } });
-        Grid seed = new Grid(simpleGridInput) ;
-        Grid firstGeneration = new Grid(new SimpleGridInput(MAX_ROW,MAX_COL,new CellState[][]{{dead,alive,dead},{dead,alive,dead},{dead,alive,dead}}));
-        Grid secondGeneration =seed;
+        Grid firstPattern = new Grid(simpleGridInput) ;
+        Grid secondPattern = new Grid(new SimpleGridInput(MAX_ROW,MAX_COL,new CellState[][]{{dead,alive,dead},{dead,alive,dead},{dead,alive,dead}}));
 
-        final Grid[] gridSteps = new Grid[] {seed ,firstGeneration, secondGeneration};
+
+        final Grid[] gridSteps = new Grid[] {firstPattern, secondPattern};
 
         Population population = new Population(simpleGridInput);
 
+        Grid currentGrid = population.getCurrentGrid();
 
-        assertThat(population.getCurrentGrid()).isEqualTo(gridSteps[0]);
-        for(int currentStep = 1 ; currentStep <nbSteps;currentStep++){
-            Grid currentGrid = population.simulateNextGeneration();
-            assertThat(currentGrid).isEqualTo(gridSteps[currentStep]);
+        for(int currentStep = 0 ; currentStep <nbSteps;currentStep++){
+            assertThat(currentGrid).isEqualTo(gridSteps[currentStep%2]);
+            currentGrid = population.simulateNextGeneration();
         }
     }
 
     @Test
-    public void simulateAllPattern2Test() throws OutOfGridException {
+    public void simulateNothing1PatternTest() throws OutOfGridException {
         final int nbSteps = 3;
 
         SimpleGridInput simpleGridInput = new SimpleGridInput(MAX_ROW, MAX_COL, new CellState[][] { { dead, alive,dead }, { alive, dead,dead }, { alive, dead,dead } });
@@ -64,41 +66,37 @@ public class PopulationTestIT {
         }
     }
 
-
     @Test
-    public void simulateAllPattern3Test() throws OutOfGridException {
-        final int nbSteps = 3;
+    public void simulateStablePatternTest() throws OutOfGridException {
+        final int nbSteps = 20;
 
-        SimpleGridInput simpleGridInput = new SimpleGridInput(MAX_ROW, MAX_COL, new CellState[][] { { dead, alive }, { alive, dead }, { alive, dead } });
+        SimpleGridInput simpleGridInput = new SimpleGridInput(MAX_ROW, MAX_COL, new CellState[][] { { alive, alive,dead }, { alive, dead,dead }, { dead, dead,dead } });
         Grid seed = new Grid(simpleGridInput) ;
-        Grid firstGeneration = new Grid(new SimpleGridInput(MAX_ROW,MAX_COL,new CellState[][]{{dead,dead},{alive,alive},{dead,dead}}));
-        Grid secondGeneration =new Grid(new SimpleGridInput(MAX_ROW,MAX_COL,new CellState[][]{{dead,dead},{dead,dead},{dead,dead}}));
+        Grid repeatedGenerations = new Grid(new SimpleGridInput(MAX_ROW,MAX_COL,new CellState[][]{{alive,alive,dead},{alive,alive,dead},{dead,dead,dead}}));
 
-        final Grid[] gridSteps = new Grid[] {seed ,firstGeneration, secondGeneration};
+        final Grid[] gridSteps = new Grid[] {seed ,repeatedGenerations};
 
         Population population = new Population(simpleGridInput);
-
 
         assertThat(population.getCurrentGrid()).isEqualTo(gridSteps[0]);
         for(int currentStep = 1 ; currentStep <nbSteps;currentStep++){
             Grid currentGrid = population.simulateNextGeneration();
-            assertThat(currentGrid).isEqualTo(gridSteps[currentStep]);
+            assertThat(currentGrid).isEqualTo(gridSteps[1]);
         }
     }
 
     @Test
-    public void simulateAllPattern4Test() throws OutOfGridException {
+    public void simulateNothing2PatternTest() throws OutOfGridException {
         final int nbSteps = 3;
 
-        SimpleGridInput simpleGridInput = new SimpleGridInput(MAX_ROW, MAX_COL, new CellState[][] { { dead, alive }, { alive, dead }, { alive, dead } });
+        SimpleGridInput simpleGridInput = new SimpleGridInput(MAX_ROW, MAX_COL, new CellState[][] { { dead, dead,alive }, { dead, alive,dead }, { alive, dead,dead } });
         Grid seed = new Grid(simpleGridInput) ;
-        Grid firstGeneration = new Grid(new SimpleGridInput(MAX_ROW,MAX_COL,new CellState[][]{{dead,dead},{alive,alive},{dead,dead}}));
-        Grid secondGeneration =new Grid(new SimpleGridInput(MAX_ROW,MAX_COL,new CellState[][]{{dead,dead},{dead,dead},{dead,dead}}));
+        Grid firstGeneration = new Grid(new SimpleGridInput(MAX_ROW,MAX_COL,new CellState[][]{{dead,dead,dead},{dead,alive,dead},{dead,dead,dead}}));
+        Grid secondGeneration =new Grid(new SimpleGridInput(MAX_ROW,MAX_COL,new CellState[][]{{dead,dead,dead},{dead,dead,dead},{dead,dead,dead}}));
 
         final Grid[] gridSteps = new Grid[] {seed ,firstGeneration, secondGeneration};
 
         Population population = new Population(simpleGridInput);
-
 
         assertThat(population.getCurrentGrid()).isEqualTo(gridSteps[0]);
         for(int currentStep = 1 ; currentStep <nbSteps;currentStep++){
