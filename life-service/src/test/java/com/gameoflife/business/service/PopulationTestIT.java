@@ -105,4 +105,26 @@ public class PopulationTestIT {
         }
     }
 
+    @Test
+    public void simulateAll() throws OutOfGridException {
+        final int nbSteps = 3;
+
+        SimpleGridInput simpleGridInput = new SimpleGridInput(MAX_ROW, MAX_COL, new CellState[][] { { dead, dead,alive }, { dead, alive,dead }, { alive, dead,dead } });
+        Grid seed = new Grid(simpleGridInput) ;
+        Grid firstGeneration = new Grid(new SimpleGridInput(MAX_ROW,MAX_COL,new CellState[][]{{dead,dead,dead},{dead,alive,dead},{dead,dead,dead}}));
+        Grid secondGeneration =new Grid(new SimpleGridInput(MAX_ROW,MAX_COL,new CellState[][]{{dead,dead,dead},{dead,dead,dead},{dead,dead,dead}}));
+
+        final Grid[] gridSteps = new Grid[] {seed ,firstGeneration, secondGeneration};
+
+        Population population = new Population(null);
+        population.simulateAll(seed, nbSteps, new NewGenerationAction() {
+            int currentStep = 0 ;
+            public void onNewGenerationCreated(Grid grid) {
+                assertThat(grid).isEqualTo(gridSteps[currentStep]);
+                currentStep++;
+            }
+        });
+
+    }
+
 }

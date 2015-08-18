@@ -2,6 +2,8 @@ package com.gameoflife.core.models;
 
 import com.gameoflife.core.consts.CellState;
 
+import java.util.Objects;
+
 /**
  * Created by Mehdi on 17/08/2015.
  */
@@ -32,6 +34,19 @@ public class Cell {
 
     public Cell(CellState cellState){
         this.cellState = cellState;
+    }
+
+    @Override public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Cell cell = (Cell) o;
+        return Objects.equals(cellState, cell.cellState);
+    }
+
+    @Override public int hashCode() {
+        return Objects.hash(cellState);
     }
 
     @Override

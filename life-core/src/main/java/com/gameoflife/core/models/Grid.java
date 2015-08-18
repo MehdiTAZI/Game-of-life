@@ -7,6 +7,7 @@ import com.gameoflife.core.inputs.GridInput;
 import com.gameoflife.maths.Vector2D;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Created by Mehdi on 17/08/2015.
@@ -15,6 +16,7 @@ public class Grid {
 
     private int width;
     private int height;
+    //todo : improve the data structure , use linkedList of just alive cells => because most of the grid contains dead cells
     private Cell[][] cells;
 
     public int getHeight() {
@@ -26,9 +28,11 @@ public class Grid {
     }
 
      public Grid(GridInput gridInput) {
-         this.width=gridInput.getWidth();
-         this.height=gridInput.getHeight();
-         this.cells = gridInput.getCells();
+         if(gridInput!=null){
+             this.width=gridInput.getWidth();
+             this.height=gridInput.getHeight();
+             this.cells = gridInput.getCells();
+         }
     }
 
     public Cell getCellAt(final int x, final int y) throws OutOfGridException {
@@ -83,24 +87,13 @@ public class Grid {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-
         Grid grid = (Grid) o;
-
-        if (width != grid.width)
-            return false;
-        if (height != grid.height)
-            return false;
-
-        //return Arrays.deepEquals(cells, grid.cells); //todo : check
+        //todo : improve equality check
         return this.toString().equals(o.toString());
-
     }
 
     @Override public int hashCode() {
-        int result = width;
-        result = 31 * result + height;
-        result = 31 * result + Arrays.deepHashCode(cells);
-        return result;
+        return Objects.hash(width, height, cells);
     }
 
     @Override

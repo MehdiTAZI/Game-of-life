@@ -65,23 +65,32 @@ public class Population {
     }
 
 
-    // todo : to fix
-    public void simulateAll(NewGenerationAction newGenerationAction){
+    public void simulateAll(Grid seed,final int nbGeneration, NewGenerationAction newGenerationAction) throws OutOfGridException {
 
-        final int maxRow =0;
-        final int maxColumn = 0;
+        final int maxRow = seed.getWidth();
+        final int maxColumn = seed.getHeight();
 
-        for (int x = 0; x < maxRow; x++) {
-            for (int y = 0; y < maxColumn; y++) {
-                for(CellRule rule : rules){
-                    rule.simulate(new Vector2D(x,y),null);
+        newGenerationAction.onNewGenerationCreated(seed);
+
+        for(int i = 1;i<nbGeneration;i++){
+
+            Grid result = new Grid(new DeadGridInput(maxRow,maxColumn));
+
+            for (int x = 0; x < maxRow; x++) {
+                for (int y = 0; y < maxColumn; y++) {
+                    for(CellRule rule : rules){
+                        Cell newCell = rule.simulate(new Vector2D(x, y), seed);
+                        if(newCell!=null) {
+                            result.setCellAt(x, y, newCell);
+                        }
+                    }
                 }
-                if(newGenerationAction !=null){
-                    newGenerationAction.onNewGenerationCreated(null);
-                }
-
             }
+
+            newGenerationAction.onNewGenerationCreated(result);
+            seed = result;
         }
+
     }
 
 }

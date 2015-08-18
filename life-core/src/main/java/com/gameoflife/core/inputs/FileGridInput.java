@@ -13,9 +13,10 @@ import java.io.IOException;
 
 public class FileGridInput implements  GridInput {
 
-    //java 7 features
+
     public FileGridInput(String fileName){
 
+        //read files using java 7 features
         //read file using the "using" keyword in order to automatically close  the file handle
         // put exception in one line using ||
     }

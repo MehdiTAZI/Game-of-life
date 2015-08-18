@@ -13,6 +13,7 @@ public class ReproductionRule implements CellRule {
 
     private static final int EXACTLY_ALIVE = 3;
 
+    // replace with spring beans
     private static ReproductionRule instance =  null;
     synchronized  public static ReproductionRule getInstance(){
         if(instance==null){
