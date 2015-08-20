@@ -50,12 +50,12 @@
             <dependency>
                 <groupId>com.mehdi.games</groupId>
                 <artifactId>life-core</artifactId>
-                <version>${life-commons.version>}</version>
+                <version>${life-commons.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.mehdi.games</groupId>
                 <artifactId>life-commons</artifactId>
-                <version>${life-core.version>}</version>
+                <version>${life-core.version}</version>
             </dependency>
             <!-- External dependencies -->
 
